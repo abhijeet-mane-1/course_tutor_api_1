@@ -13,4 +13,23 @@
 ActiveRecord::Schema[8.1].define(version: 2026_08_13_105053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "courses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tutors", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_tutors_on_course_id"
+    t.index ["email"], name: "index_tutors_on_email", unique: true
+  end
+
+  add_foreign_key "tutors", "courses"
 end
